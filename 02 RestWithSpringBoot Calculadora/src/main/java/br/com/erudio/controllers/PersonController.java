@@ -44,6 +44,13 @@ public class PersonController {
 		
 	}
 	
+	@PostMapping("v2")
+	public PersonVO createv2(@RequestBody PersonVO PersonVO) {
+		
+		return personService.create(PersonVO);
+		
+	}
+	
 	
 	@PutMapping
 	public PersonVO update(@RequestBody PersonVO PersonVO) {
