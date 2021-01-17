@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.erudio.converter.DozerConverter;
 import br.com.erudio.data.model.Person;
-import br.com.erudio.data.vo.PersonVO;
+import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.repository.PersonRepository;
 
 @Service
@@ -31,7 +31,7 @@ public class PersonServices {
 	}
 	
 	public PersonVO update(PersonVO person) {
-		var entity =  repository.findById(person.getId()).orElseThrow(
+		var entity =  repository.findById(person.getKey()).orElseThrow(
 				() -> new ResourceNotFoundException("No records found for this ID"));
 		
 		entity.setFristName(person.getFristName());

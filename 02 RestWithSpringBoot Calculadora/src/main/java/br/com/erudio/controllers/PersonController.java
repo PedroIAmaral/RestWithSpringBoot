@@ -13,38 +13,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.erudio.data.vo.PersonVO;
+import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.services.PersonServices;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
 	@Autowired
 	private PersonServices personService;
 	
-	@GetMapping
+	@GetMapping(produces = {"application/json","application/xml", "application/x-yaml"})
 	public List<PersonVO> findByAll() {
 		
 		return personService.findAll();
 		
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping(value = "/{id}" , produces = {"application/json","application/xml", "application/x-yaml"})
 	public PersonVO findById(@PathVariable("id") Long id) {
-		
-		return personService.findById(id);
-		
+		PersonVO personVO = personService.findById(id);
+//		personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return personVO;
 	}
 	
-	@PostMapping
+	@PostMapping(produces = {"application/json","application/xml", "application/x-yaml"},
+			consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public PersonVO create(@RequestBody PersonVO PersonVO) {
 		
 		return personService.create(PersonVO);
 		
 	}
 	
-	@PostMapping("v2")
+	@PostMapping(value = "v2", produces = {"application/json","application/xml", "application/x-yaml"},
+			consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public PersonVO createv2(@RequestBody PersonVO PersonVO) {
 		
 		return personService.create(PersonVO);
@@ -52,7 +54,8 @@ public class PersonController {
 	}
 	
 	
-	@PutMapping
+	@PutMapping(produces = {"application/json","application/xml", "application/x-yaml"},
+			consumes = {"application/json", "application/xml", "application/x-yaml"})
 	public PersonVO update(@RequestBody PersonVO PersonVO) {
 		
 		return personService.update(PersonVO);
